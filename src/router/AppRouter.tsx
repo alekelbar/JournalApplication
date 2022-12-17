@@ -3,10 +3,11 @@ import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import { Layout } from "../common/layout/AppLayout";
 import { HomePage } from "../pages/home/index";
 import { LoginPage } from "../pages/login";
+import { AuthTemplate } from "../common/layout/AuthTemplate";
+import { RegisterPage } from "../pages/register";
 import { AuthLayout } from "../common/layout/AuthLayout";
-import { RegisterPage } from "../pages/register/registerPage";
 
-export const AppRouter = () => {
+export const AppRouter = () => {``
   return (
     <Routes>
       <Route path="/" element={<Layout />}>

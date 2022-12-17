@@ -1,10 +1,11 @@
-import { Grid } from "@mui/material";
 import React from "react";
+import { Grid } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
-export const AuthLayout: React.FC = () => {
+export const AuthLayout = () => {
+  console.log("Auth layout RENDERING");
   return (
-    <Grid container width={"100%"} height={"100vh"}>
+    <Grid container>
       <Outlet />
     </Grid>
   );

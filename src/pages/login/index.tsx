@@ -1,17 +1,15 @@
-import { Google, Login } from "@mui/icons-material";
+import { AppRegistrationRounded, Google, Login } from "@mui/icons-material";
 import {
   Button,
+  ButtonGroup,
   Divider,
   Grid,
-  IconButton,
-  Link,
-  Paper,
   TextField,
   Typography,
 } from "@mui/material";
-import { Box, Container } from "@mui/system";
 import React from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { AuthTemplate } from "../../common/layout/AuthTemplate";
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -20,65 +18,65 @@ export const LoginPage: React.FC = () => {
     navigate("/auth/register");
   };
 
-  return (
-    <Grid
-      container
-      width={"100%"}
-      height={"100vh"}
-      direction={"row"}
-      justifyContent={"center"}
-      alignItems={"center"}
-    >
-      <Grid item xs={10} md={4} sm={6}>
-        <Paper sx={{ p: 4 }}>
-          <Box component={"form"}>
-            <Typography variant="h4" color={"secondary"} mb={3}>
-              Sign-In
-            </Typography>
-            <Grid container direction={"column"} spacing={2}>
-              <Grid item>
-                <TextField
-                  placeholder="Email@email.com"
-                  fullWidth
-                  variant="outlined"
-                  label="email"
-                />
-              </Grid>
-              <Grid item>
-                <TextField
-                  placeholder="Your Password"
-                  fullWidth
-                  variant="outlined"
-                  label="password"
-                />
-              </Grid>
-              <Grid item>
-                <Button
-                  sx={{ mb: ".5em" }}
-                  size="small"
-                  color="primary"
-                  fullWidth
-                  variant="contained"
-                >
-                  <Login />
-                  <Typography mx={1}>Login</Typography>
-                </Button>
-                <Divider />
+  const handleGoogle = () => {
+    console.log("handle login with google");
+  };
 
-                <Button
-                  variant={"text"}
-                  fullWidth
-                  size={"small"}
-                  onClick={handleRegister}
-                >
-                  <Google />
-                  <Typography mx={1}>Register</Typography>
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
-        </Paper>
+  return (
+    <AuthTemplate title="Login">
+      <Grid container direction={"column"} spacing={2}>
+        <Grid item>
+          <TextField
+            placeholder="Email@email.com"
+            fullWidth
+            variant="outlined"
+            label="email"
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            placeholder="Your Password"
+            fullWidth
+            variant="outlined"
+            label="password"
+          />
+        </Grid>
+        <Grid item>
+          <Button
+            sx={{ mb: ".5em" }}
+            size="small"
+            color="primary"
+            fullWidth
+            variant="contained"
+          >
+            <Login />
+            <Typography mx={1}>Login</Typography>
+          </Button>
+          <Divider />
+
+          <ButtonGroup fullWidth>
+            <Button
+              variant={"contained"}
+              fullWidth
+              size={"small"}
+              onClick={handleGoogle}
+            >
+              <Google />
+              <Typography mx={1}>Google</Typography>
+            </Button>
+
+            <Button
+              variant={"contained"}
+              fullWidth
+              size={"small"}
+              onClick={handleRegister}
+            >
+              <AppRegistrationRounded />
+              <Typography mx={1}>Register</Typography>
+            </Button>
+          </ButtonGroup>
+        </Grid>
       </Grid>
-    </Grid>
+    </AuthTemplate>
   );
 };
