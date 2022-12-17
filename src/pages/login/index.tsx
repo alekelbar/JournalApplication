@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthTemplate } from "../../common/layout/AuthTemplate";
+import { AuthLayout } from "../../common/layout/AuthLayout";
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <AuthTemplate title="Login">
+    <AuthLayout title="Login">
       <Grid container direction={"column"} spacing={2}>
         <Grid item>
           <TextField
@@ -77,6 +77,6 @@ export const LoginPage: React.FC = () => {
           </ButtonGroup>
         </Grid>
       </Grid>
-    </AuthTemplate>
+    </AuthLayout>
   );
 };

@@ -1,7 +1,7 @@
 import { AppRegistrationRounded, LoginRounded } from "@mui/icons-material";
 import { Button, Divider, Grid, TextField, Typography } from "@mui/material";
 import React from "react";
-import { AuthTemplate } from "../../common/layout/AuthTemplate";
+import { AuthLayout } from "../../common/layout/AuthLayout";
 import { useNavigate } from "react-router-dom";
 
 export const RegisterPage: React.FC = () => {
@@ -13,8 +13,16 @@ export const RegisterPage: React.FC = () => {
     navigate("/auth");
   };
   return (
-    <AuthTemplate title={"Register"}>
+    <AuthLayout title={"Register"}>
       <Grid container direction={"column"} spacing={2}>
+        <Grid item>
+          <TextField
+            placeholder="John Doe"
+            fullWidth
+            variant="outlined"
+            label="Complete name"
+          />
+        </Grid>
         <Grid item>
           <TextField
             placeholder="Email@email.com"
@@ -51,10 +59,10 @@ export const RegisterPage: React.FC = () => {
             onClick={handleLogin}
           >
             <LoginRounded />
-            <Typography mx={1}>Login</Typography>
+            <Typography mx={1}>Are ready registered? Login</Typography>
           </Button>
         </Grid>
       </Grid>
-    </AuthTemplate>
+    </AuthLayout>
   );
 };
