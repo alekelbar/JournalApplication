@@ -23,17 +23,24 @@ export const JournalLayout: React.FC<Props> = ({ children }) => {
       direction={"column"}
       justifyContent={"center"}
       alignItems="center"
-      sx={{ mt: { md: 2 } }}
+      m="0 auto"
     >
-      <Navbar setDrawerOpen={setDrawerOpen} drawerSize={DrawerSize} />
+      <Navbar setDrawerOpen={setDrawerOpen} />
       <SideBar
         CloseDrawer={handleCloseDrawer}
         drawerSize={DrawerSize}
         open={drawerOpen}
       />
-      <Container sx={{ mt: 3 }}>
-        <Box component={"main"}>{children}</Box>
-      </Container>
+      <Grid
+        container
+        flexDirection={"column"}
+        alignItems="center"
+        justifyContent={"center"}
+        maxWidth={"md"}
+        mt={3}
+      >
+        {children}
+      </Grid>
     </Grid>
   );
 };

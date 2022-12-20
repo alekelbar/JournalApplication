@@ -2,7 +2,6 @@ import React from "react";
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import { HomePage } from "../pages/home/index";
 import { LoginPage } from "../pages/login";
-import { AuthTemplate } from "../common/layout/AuthLayout";
 import { RegisterPage } from "../pages/register";
 import { AuthLayout } from "../common/layout/AuthLayout";
 

@@ -24,7 +24,7 @@ export const ThemeButton: React.FC<Props> = ({ themeHandler }) => {
   return (
     <SpeedDial
       ariaLabel="Theme selected"
-      sx={{ position: "absolute", bottom: 16, right: 16 }}
+      sx={{ position: "fixed", bottom: 16, right: 16 }}
       icon={<SpeedDialIcon />}
     >
       {actions.map((mode: ModeAction) => (
