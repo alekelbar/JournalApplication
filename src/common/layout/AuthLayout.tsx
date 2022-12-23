@@ -1,7 +1,6 @@
 import { Grid, Typography, Box, Paper } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
-import { Outlet } from "react-router-dom";
 
 interface Props {
   title: string;
