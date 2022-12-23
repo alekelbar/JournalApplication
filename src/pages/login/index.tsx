@@ -13,6 +13,9 @@ import { useNavigate } from "react-router-dom";
 import { AuthLayout } from "../../common/layout/AuthLayout";
 import { useFormik } from "formik";
 import { UserCredentials } from "../../types";
+import { useDispatch } from "react-redux";
+import { startCheckingAuth } from "../../redux/thunks";
+import { AnyAction } from "redux";
 
 const initialValues: UserCredentials = {
   email: "",
@@ -20,15 +23,18 @@ const initialValues: UserCredentials = {
 };
 
 export const LoginPage: React.FC = () => {
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues,
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      dispatch(startCheckingAuth() as unknown as AnyAction);
       resetForm();
     },
     validationSchema: yup.object({
       email: yup
         .string()
+        .email()
         .required()
         .test(
           "min",
@@ -51,6 +57,7 @@ export const LoginPage: React.FC = () => {
 
   const handleGoogle = () => {
     console.log("handle login with google");
+    dispatch(startCheckingAuth() as unknown as AnyAction);
   };
 
   return (
