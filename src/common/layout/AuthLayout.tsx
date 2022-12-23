@@ -5,10 +5,10 @@ import React from "react";
 interface Props {
   title: string;
   children: JSX.Element;
+  onSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void;
 }
 
-export const AuthLayout: React.FC<Props> = ({ title, children }) => {
-  console.log("auth template RENDERING");
+export const AuthLayout: React.FC<Props> = ({ title, children, onSubmit }) => {
   return (
     <Grid
       container
@@ -21,7 +21,7 @@ export const AuthLayout: React.FC<Props> = ({ title, children }) => {
       <Grid item>
         <Container>
           <Paper sx={{ p: 4 }}>
-            <Box component={"form"}>
+            <Box component={"form"} onSubmit={onSubmit}>
               <Typography variant="h4" color={"secondary"} mb={3}>
                 {title}
               </Typography>

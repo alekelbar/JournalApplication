@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Auth } from "../types/auth.type";
 
-const initialState = {
+const initialState: Auth = {
   status: "cheking", // 'autenticated', 'not-autenticated'
   uid: null,
   email: null,
@@ -16,7 +17,12 @@ export const authSlice = createSlice({
   reducers: {
     login: (state, actions) => {},
     logout: (state, actions) => {},
-    checkingCredentials: (state) => {},
+    checkingCredentials: (state) => {
+      return {
+        ...state,
+        status: "cheking",
+      };
+    },
   },
 });
 

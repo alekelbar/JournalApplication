@@ -1,3 +1,4 @@
+import React from "react";
 import { AppRegistrationRounded, Google, Login } from "@mui/icons-material";
 import {
   Button,
@@ -7,11 +8,41 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { AuthLayout } from "../../common/layout/AuthLayout";
+import { useFormik } from "formik";
+import { UserCredentials } from "../../types";
+
+const initialValues: UserCredentials = {
+  email: "",
+  password: "",
+};
 
 export const LoginPage: React.FC = () => {
+  const formik = useFormik({
+    initialValues,
+    onSubmit: (values, { resetForm }) => {
+      console.log(values);
+      resetForm();
+    },
+    validationSchema: yup.object({
+      email: yup
+        .string()
+        .required()
+        .test(
+          "min",
+          "Su email, al menos debería tener 10 caracteres",
+          (value) => (value?.length || 0) > 10
+        ),
+      password: yup.string().required(),
+    }),
+    onReset: (values) => {
+      console.log(values);
+      return values;
+    },
+  });
+
   const navigate = useNavigate();
 
   const handleRegister = () => {
@@ -23,22 +54,28 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <AuthLayout title="Login">
+    <AuthLayout title="Login" onSubmit={formik.handleSubmit}>
       <Grid container direction={"column"} spacing={2}>
         <Grid item>
           <TextField
+            autoComplete="off"
             placeholder="Email@email.com"
             fullWidth
-            variant="outlined"
+            variant="filled"
             label="email"
+            name="email"
+            onChange={formik.handleChange}
           />
         </Grid>
         <Grid item>
           <TextField
+            autoComplete="off"
             placeholder="Your Password"
             fullWidth
-            variant="outlined"
+            variant="filled"
             label="password"
+            name="password"
+            onChange={formik.handleChange}
           />
         </Grid>
         <Grid item>
@@ -48,6 +85,7 @@ export const LoginPage: React.FC = () => {
             color="primary"
             fullWidth
             variant="contained"
+            type="submit"
           >
             <Login />
             <Typography mx={1}>Login</Typography>
