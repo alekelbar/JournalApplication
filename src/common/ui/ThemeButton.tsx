@@ -1,4 +1,5 @@
 import { DarkMode, LightMode } from "@mui/icons-material";
+import LightModeIcon from "@mui/icons-material/LightMode";
 import {
   SpeedDial,
   SpeedDialAction,
@@ -25,7 +26,7 @@ export const ThemeButton: React.FC<Props> = ({ themeHandler }) => {
     <SpeedDial
       ariaLabel="Theme selected"
       sx={{ position: "fixed", bottom: 16, right: 16 }}
-      icon={<SpeedDialIcon />}
+      icon={<LightModeIcon />}
     >
       {actions.map((mode: ModeAction) => (
         <SpeedDialAction

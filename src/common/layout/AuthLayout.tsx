@@ -1,4 +1,5 @@
 import { Grid, Typography, Box, Paper } from "@mui/material";
+import { Container } from "@mui/system";
 import React from "react";
 import { Outlet } from "react-router-dom";
 
@@ -19,14 +20,16 @@ export const AuthLayout: React.FC<Props> = ({ title, children }) => {
       alignItems={"center"}
     >
       <Grid item>
-        <Paper sx={{ p: 4 }}>
-          <Box component={"form"}>
-            <Typography variant="h4" color={"secondary"} mb={3}>
-              {title}
-            </Typography>
-            {children}
-          </Box>
-        </Paper>
+        <Container>
+          <Paper sx={{ p: 4 }}>
+            <Box component={"form"}>
+              <Typography variant="h4" color={"secondary"} mb={3}>
+                {title}
+              </Typography>
+              {children}
+            </Box>
+          </Paper>
+        </Container>
       </Grid>
     </Grid>
   );

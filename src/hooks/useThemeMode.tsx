@@ -22,6 +22,7 @@ export const useThemeMode = () => {
   const theme = createTheme({
     palette: {
       mode: mode ? "dark" : "light",
+
       primary: {
         main: themeConfig.PRIMARY_C,
       },

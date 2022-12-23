@@ -15,10 +15,10 @@ export const NoteView = () => {
         alignItems="center"
       >
         {/* Fecha y acciones */}
-        <Grid item sm={4} xs={12}>
+        <Grid item sm={6} xs={12}>
           {/* Formulario... */}
           <Grid container justifyContent={"space-between"} alignItems="center">
-            <Typography>
+            <Typography color={"primary.main"}>
               {new Date("December 17, 1995 03:24:00").toDateString()}
             </Typography>
             <Button variant="contained">Save Note</Button>
@@ -28,6 +28,7 @@ export const NoteView = () => {
               <TextField
                 label="Titulo"
                 fullWidth
+                color="secondary"
                 placeholder="¿Cual es el título?"
               />
             </Grid>
@@ -35,8 +36,9 @@ export const NoteView = () => {
               <TextField
                 label="Contenido"
                 fullWidth
+                color="secondary"
                 multiline
-                minRows={8}
+                minRows={12}
                 placeholder="Que estas pensando?"
               />
             </Grid>

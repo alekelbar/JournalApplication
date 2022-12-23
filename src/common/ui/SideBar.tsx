@@ -79,7 +79,9 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
                   <TurnedIn />
                 </ListItemIcon>
                 <Grid container direction={"column"}>
-                  <ListItemText primary={e} />
+                  <ListItemText
+                    primary={e[0].toUpperCase() + e.slice(1, e.length)}
+                  />
                   <ListItemText
                     sx={{ maxWidth: 250, overflow: "hidden" }}
                     secondary={
