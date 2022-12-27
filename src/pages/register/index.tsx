@@ -1,11 +1,22 @@
 import { AppRegistrationRounded, LoginRounded } from "@mui/icons-material";
-import { Button, Divider, Grid, TextField, Typography } from "@mui/material";
-import React from "react";
-import { AuthLayout } from "../../common/layout/AuthLayout";
-import { useNavigate } from "react-router-dom";
+import {
+  Alert,
+  Button,
+  Divider,
+  Grid,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useFormik } from "formik";
-import { UserCredentials } from "../../types/user";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { AuthLayout } from "../../common/layout/AuthLayout";
+import { useAppDispatch } from "../../redux";
+import { useAppSelector } from "../../redux/hooks/hooks.redux";
+import { startMakeUserWithEmailAndPassword } from "../../redux/thunks";
+import { UserCredentials } from "../../types/user";
 
 const initialValues: UserCredentials = {
   email: "",
@@ -14,11 +25,29 @@ const initialValues: UserCredentials = {
 };
 
 export const RegisterPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  const { errorMessage, status } = useAppSelector((state) => state.auth);
+
+  const [authError, setAuthError] = React.useState<string | null>(errorMessage);
+  const [openError, setOpenError] = React.useState(false);
+
+  const isCheking = React.useMemo(() => status === "cheking", [status]);
+
+  React.useEffect(() => {
+    setAuthError(errorMessage);
+    setOpenError(true);
+  }, [errorMessage]);
+
   const formik = useFormik({
     initialValues,
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
-      resetForm();
+      const { email, password, fullName } = values;
+
+      // because the fullname property has optional
+      if (!fullName) return;
+      dispatch(startMakeUserWithEmailAndPassword(email, password, fullName));
+      resetForm({ values: initialValues });
     },
     validationSchema: yup.object({
       email: yup
@@ -28,10 +57,24 @@ export const RegisterPage: React.FC = () => {
         .test(
           "min",
           "Su email, al menos debería tener 10 caracteres",
-          (value) => (value?.length || 0) > 10
+          (value) => (value?.length || 0) >= 10
         ),
-      password: yup.string().required(),
-      fullName: yup.string().required(),
+      password: yup
+        .string()
+        .required()
+        .test(
+          "min",
+          "Su Password, al menos debería tener 6 caracteres",
+          (value) => (value?.length || 0) >= 10
+        ),
+      fullName: yup
+        .string()
+        .required()
+        .test(
+          "min",
+          "Su nombre, al menos debería tener 10 caracteres",
+          (value) => (value?.length || 0) >= 10
+        ),
     }),
   });
 
@@ -41,40 +84,80 @@ export const RegisterPage: React.FC = () => {
     navigate("/auth");
   };
 
+  const onCloseError = () => {
+    setOpenError(false);
+  };
+
   return (
     <AuthLayout title={"Register"} onSubmit={formik.handleSubmit}>
       <Grid container direction={"column"} spacing={2}>
+        {authError && (
+          <Snackbar
+            open={openError}
+            onClose={() => {}}
+            autoHideDuration={3000}
+            anchorOrigin={{ horizontal: "center", vertical: "top" }}
+          >
+            <Alert severity="error" onClose={onCloseError}>
+              {authError}
+            </Alert>
+          </Snackbar>
+        )}
         <Grid item>
           <TextField
             autoComplete="off"
             placeholder="John Doe"
+            color={
+              formik.errors.fullName && formik.touched.fullName
+                ? "error"
+                : "secondary"
+            }
+            helperText={formik.errors.fullName || ""}
             fullWidth
             variant="filled"
             label="Complete name"
             onChange={formik.handleChange}
             name={"fullName"}
+            value={formik.values.fullName}
+            onBlur={formik.handleBlur}
           />
         </Grid>
         <Grid item>
           <TextField
-            autoComplete="off"
+            autoComplete="on"
             placeholder="Email@email.com"
+            color={
+              formik.errors.email && formik.touched.email
+                ? "error"
+                : "secondary"
+            }
+            helperText={formik.errors.email || ""}
             fullWidth
             variant="filled"
             label="email"
             onChange={formik.handleChange}
             name={"email"}
+            value={formik.values.email}
+            onBlur={formik.handleBlur}
           />
         </Grid>
         <Grid item>
           <TextField
             autoComplete="off"
             placeholder="Your Password"
+            color={
+              formik.errors.password && formik.touched.password
+                ? "error"
+                : "secondary"
+            }
+            helperText={formik.errors.password || ""}
             fullWidth
             variant="filled"
             label="password"
             onChange={formik.handleChange}
             name={"password"}
+            value={formik.values.password}
+            onBlur={formik.handleBlur}
           />
         </Grid>
         <Grid item>
@@ -85,6 +168,7 @@ export const RegisterPage: React.FC = () => {
             fullWidth
             variant="contained"
             type="submit"
+            disabled={isCheking}
           >
             <AppRegistrationRounded />
             <Typography mx={1}>Register</Typography>
@@ -96,6 +180,7 @@ export const RegisterPage: React.FC = () => {
             fullWidth
             size={"small"}
             onClick={handleLogin}
+            disabled={isCheking}
           >
             <LoginRounded />
             <Typography mx={1}>Are ready registered? Login</Typography>

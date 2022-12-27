@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Auth } from "../types/auth.type";
 
 const initialState: Auth = {
@@ -15,15 +15,23 @@ export const authSlice = createSlice({
   initialState,
   // TODO: Define dataypes of: ActionsPayload
   reducers: {
-    login: (state, actions) => {},
-    logout: (state, actions) => {},
+    login: (_, { payload }: PayloadAction<Auth>) => {
+      return { ...payload };
+    },
+    logout: (_, { payload }: PayloadAction<string>) => {
+      return { ...initialState, errorMessage: payload };
+    },
     checkingCredentials: (state) => {
       return {
         ...state,
         status: "cheking",
       };
     },
+    loginWithEmailAndPassword: (state, { payload }: PayloadAction<Auth>) => {
+      return { ...state, ...payload };
+    },
   },
 });
 
-export const { login, logout, checkingCredentials } = authSlice.actions;
+export const { login, logout, checkingCredentials, loginWithEmailAndPassword } =
+  authSlice.actions;
