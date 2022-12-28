@@ -1,4 +1,5 @@
 import { Close, TurnedIn } from "@mui/icons-material";
+import { useAppSelector } from '../../redux/hooks/hooks.redux';
 import {
   Grid,
   ListItemButton,
@@ -24,6 +25,9 @@ interface Props {
 }
 
 export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
+
+  const { displayName } = useAppSelector(state => state.auth);
+
   const handleCloseWithEsc = (e: React.KeyboardEvent) => {
     console.log(e);
     if (e.code === "Escape") CloseDrawer();
@@ -64,8 +68,9 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
                   mt: 2,
                 }}
               >
-                <Avatar />
-                <Typography variant="body1">Alexander</Typography>
+                <Avatar sx={{ mt: 1 }} />
+                <Typography mb={1} variant="body1">{displayName}</Typography>
+
               </Box>
             </Grid>
           </Grid>
