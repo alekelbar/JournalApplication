@@ -5,7 +5,7 @@ import {
   logout,
 } from "../../slices";
 import { signInWithGoogle } from "../../../firebase/Providers/google.provider";
-import { MakeUserWithEmailAndPassword } from "../../../firebase/Providers/emailPass.provider";
+import { loginWithEmailAndPass, MakeUserWithEmailAndPassword, logoutFirebase } from '../../../firebase/Providers/emailPass.provider';
 import { ThunkAction } from "@reduxjs/toolkit";
 
 export const startCheckingAuth = () => {
@@ -22,13 +22,13 @@ export const startGoogleSignIn = () => {
     // Something was wrong...
     if (!authData.OK) {
       dispatch(logout(authData.error || ""));
-      return;
+      return false;
     }
 
     // Everything was OK...
     if (!authData.user) {
       dispatch(logout(authData.error || ""));
-      return;
+      return false;
     }
 
     const { displayName, email, photoURL, uid } = authData.user;
@@ -42,6 +42,7 @@ export const startGoogleSignIn = () => {
         errorMessage: null,
       })
     );
+    return true;
   };
 };
 
@@ -60,7 +61,7 @@ export const startMakeUserWithEmailAndPassword = (
 
     if (!registerInfo.user) {
       dispatch(logout(registerInfo.error as string));
-      return;
+      return false;
     }
 
     const {
@@ -78,5 +79,40 @@ export const startMakeUserWithEmailAndPassword = (
         uid,
       })
     );
+    return true;
   };
 };
+
+export const startLoginWithEmailAndPassword = (email: string, password: string) => {
+  return async (dispatch: any) => {
+    const authData = await loginWithEmailAndPass(email, password);
+
+    // if something was wrong
+    if (!authData.OK) {
+      dispatch(logout(authData.error));
+      return false;
+    }
+
+    // Everything was OK?...
+    if (!authData.user) {
+      dispatch(logout(authData.error));
+      return false;
+    }
+
+    const { displayName, email: userEmail, photoURL, uid } = authData.user;
+
+    dispatch(login({
+      displayName, photoURL, uid, email: userEmail, status: 'autenticated', errorMessage: null
+    }))
+    // everything was OK
+    return true;
+  }
+}
+
+
+export const startLogoutFirebase = () => {
+  return async (dispatch: any) => {
+    await logoutFirebase();
+    dispatch(logout(null));
+  }
+}

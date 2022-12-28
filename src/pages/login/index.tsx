@@ -16,8 +16,7 @@ import { AuthLayout } from "../../common/layout/AuthLayout";
 import { useFormik } from "formik";
 import { UserCredentials } from "../../types";
 import { startCheckingAuth } from "../../redux/thunks";
-import { AnyAction } from "redux";
-import { startGoogleSignIn } from "../../redux/thunks/auth/index";
+import { startGoogleSignIn, startLoginWithEmailAndPassword } from '../../redux/thunks/auth/index';
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks.redux";
 
 const initialValues: UserCredentials = {
@@ -26,11 +25,12 @@ const initialValues: UserCredentials = {
 };
 
 export const LoginPage: React.FC = () => {
+
+  console.log('login page, rendering...')
   // Status del proceso...
   const { status, errorMessage } = useAppSelector((state) => state.auth);
 
-  const [authError, setAuthError] = React.useState<string | null>(errorMessage);
-  const [openError, setOpenError] = React.useState(false);
+  const [openError, setOpenError] = React.useState(true);
 
   const isCheking = useMemo(() => status === "cheking", [status]);
 
@@ -38,27 +38,30 @@ export const LoginPage: React.FC = () => {
 
   const formik = useFormik({
     initialValues,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: async ({ email, password }, { resetForm }) => {
       dispatch(startCheckingAuth());
+
+      // make the dispatch
+      const authResult = await dispatch(startLoginWithEmailAndPassword(email, password));
+
+      if (authResult) navigate('/', { replace: true });
+
+      console.log(authResult)
+
       resetForm({ values: initialValues });
     },
     validationSchema: yup.object({
       email: yup
         .string()
-        .email()
-        .required()
-        .test(
-          "min",
-          "Su email, al menos debería tener 10 caracteres",
-          (value) => (value?.length || 0) >= 10
-        ),
+        .email("Your email has not the correct format")
+        .required(),
       password: yup
         .string()
         .required()
         .test(
           "min",
-          "Su Password, al menos debería tener 10 caracteres",
-          (value) => (value?.length || 0) >= 10
+          "Su Password, al menos debería tener 8 caracteres",
+          (value) => (value?.length || 0) >= 8
         ),
     }),
   });
@@ -77,24 +80,26 @@ export const LoginPage: React.FC = () => {
     setOpenError(false);
   };
 
+  console.log(errorMessage && 'si existe');
+
   return (
     <AuthLayout title="Login" onSubmit={formik.handleSubmit}>
       <Grid container direction={"column"} spacing={2}>
-        {authError && (
+        {errorMessage && (
           <Snackbar
             open={openError}
-            onClose={() => {}}
+            onClose={() => { }}
             autoHideDuration={3000}
             anchorOrigin={{ horizontal: "center", vertical: "top" }}
           >
             <Alert severity="error" onClose={onCloseError}>
-              {authError}
+              {errorMessage}
             </Alert>
           </Snackbar>
         )}
         <Grid item>
           <TextField
-            autoComplete="off"
+            autoComplete="on"
             placeholder="Email@email.com"
             color={
               formik.errors.email && formik.touched.email
@@ -125,6 +130,7 @@ export const LoginPage: React.FC = () => {
             variant="filled"
             label="password"
             name="password"
+            type={'password'}
             onChange={formik.handleChange}
             value={formik.values.password}
             onBlur={formik.handleBlur}

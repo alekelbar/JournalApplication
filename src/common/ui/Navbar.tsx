@@ -1,15 +1,14 @@
 import { LogoutRounded, MenuOutlined } from "@mui/icons-material";
 import {
   AppBar,
-  Button,
   Grid,
   IconButton,
-  Menu,
   Toolbar,
   Typography,
 } from "@mui/material";
 import React from "react";
-import { Box } from "@mui/material";
+import { useAppDispatch } from '../../redux/hooks/hooks.redux';
+import { startLogoutFirebase } from '../../redux/thunks/auth/index';
 
 interface Props {
   setDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,6 +18,12 @@ export const Navbar: React.FC<Props> = ({ setDrawerOpen }) => {
   const handleDrawer = () => {
     setDrawerOpen(true);
   };
+
+  const dispatch = useAppDispatch()
+
+  const handleLogOut = async() => {
+    await dispatch(startLogoutFirebase());
+  }
 
   return (
     <Grid container>
@@ -37,7 +42,7 @@ export const Navbar: React.FC<Props> = ({ setDrawerOpen }) => {
             </Grid>
             <Grid item>
               <Grid item>
-                <IconButton>
+                <IconButton onClick={handleLogOut}>
                   <LogoutRounded />
                 </IconButton>
               </Grid>

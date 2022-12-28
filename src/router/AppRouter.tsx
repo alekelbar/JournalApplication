@@ -1,21 +1,27 @@
-import React from "react";
-import { Navigate, Outlet, Route, Routes } from "react-router-dom";
-import { HomePage } from "../pages/home/index";
-import { LoginPage } from "../pages/login";
-import { RegisterPage } from "../pages/register";
-import { AuthLayout } from "../common/layout/AuthLayout";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { StatusChecking } from '../common/ui/StatusChecking';
+import { JournalRoutes } from "./JornalApp";
+import { AuthRoutes } from './auth/index';
+import { useAuthState } from '../hooks/useAuthState';
 
 export const AppRouter = () => {
+
+  const { status } = useAuthState();
+
+  if (status === 'cheking') return <StatusChecking />
+
   return (
     <Routes>
-      <Route path="/">
-        <Route path="/" element={<HomePage />} />
-      </Route>
-      <Route path="/auth">
-        <Route path="/auth" element={<LoginPage />} />
-        <Route path="/auth/register" element={<RegisterPage />} />
-      </Route>
-      <Route path="/*" element={<Navigate to={"/"} />} />
+      {
+        status === 'autenticated' ?
+          (
+            <Route path="/*" element={<JournalRoutes />} />
+          ) :
+          (
+            <Route path="/auth/*" element={<AuthRoutes />} />
+          )
+      }
+      <Route path="/*" element={<Navigate to={'/auth/login'}/>} />
     </Routes>
   );
 };

@@ -25,6 +25,7 @@ const initialValues: UserCredentials = {
 };
 
 export const RegisterPage: React.FC = () => {
+  console.log('register page, rendering...')
   const dispatch = useAppDispatch();
 
   const { errorMessage, status } = useAppSelector((state) => state.auth);
@@ -41,39 +42,36 @@ export const RegisterPage: React.FC = () => {
 
   const formik = useFormik({
     initialValues,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm }) => {
       const { email, password, fullName } = values;
 
       // because the fullname property has optional
       if (!fullName) return;
-      dispatch(startMakeUserWithEmailAndPassword(email, password, fullName));
+      const authResult = await dispatch(startMakeUserWithEmailAndPassword(email, password, fullName));
+
+      if (authResult) navigate('/auth');
       resetForm({ values: initialValues });
     },
     validationSchema: yup.object({
       email: yup
         .string()
         .required()
-        .email()
-        .test(
-          "min",
-          "Su email, al menos debería tener 10 caracteres",
-          (value) => (value?.length || 0) >= 10
-        ),
+        .email("Your email has not the correct format"),
       password: yup
         .string()
         .required()
         .test(
           "min",
           "Su Password, al menos debería tener 6 caracteres",
-          (value) => (value?.length || 0) >= 10
+          (value) => (value?.length || 0) >= 6
         ),
       fullName: yup
         .string()
         .required()
         .test(
           "min",
-          "Su nombre, al menos debería tener 10 caracteres",
-          (value) => (value?.length || 0) >= 10
+          "Su nombre, al menos debería tener 8 caracteres",
+          (value) => (value?.length || 0) >= 8
         ),
     }),
   });
@@ -94,7 +92,7 @@ export const RegisterPage: React.FC = () => {
         {authError && (
           <Snackbar
             open={openError}
-            onClose={() => {}}
+            onClose={() => { }}
             autoHideDuration={3000}
             anchorOrigin={{ horizontal: "center", vertical: "top" }}
           >
@@ -156,6 +154,7 @@ export const RegisterPage: React.FC = () => {
             label="password"
             onChange={formik.handleChange}
             name={"password"}
+            type={'password'}
             value={formik.values.password}
             onBlur={formik.handleBlur}
           />

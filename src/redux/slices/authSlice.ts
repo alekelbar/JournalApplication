@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Auth } from "../types/auth.type";
 
 const initialState: Auth = {
-  status: "not-autenticated", // 'autenticated', 'not-autenticated'
+  status: "cheking", // 'autenticated', 'not-autenticated'
   uid: null,
   email: null,
   displayName: null,
@@ -18,8 +18,8 @@ export const authSlice = createSlice({
     login: (_, { payload }: PayloadAction<Auth>) => {
       return { ...payload };
     },
-    logout: (_, { payload }: PayloadAction<string>) => {
-      return { ...initialState, errorMessage: payload };
+    logout: (_, { payload = null }: PayloadAction<string | null | undefined>) => {
+      return { ...initialState, errorMessage: payload, status: 'not-autenticated' };
     },
     checkingCredentials: (state) => {
       return {

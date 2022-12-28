@@ -1,10 +1,11 @@
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   updateProfile,
   User,
 } from "firebase/auth";
 import { fireBaseAuth } from "../index.firebase";
-import { AuthProviderStatus } from "../interfaces/index";
+import { AuthProviderStatus } from '../interfaces/index';
 
 export const MakeUserWithEmailAndPassword = async (
   email: string,
@@ -34,3 +35,25 @@ export const MakeUserWithEmailAndPassword = async (
     return authProviderStatus;
   }
 };
+
+export const loginWithEmailAndPass = async (email: string, password: string) => {
+  const authStatus: AuthProviderStatus = {
+    OK: false,
+    error: null,
+  };
+
+  try {
+    const loginResult = await signInWithEmailAndPassword(fireBaseAuth, email, password);
+    authStatus.user = loginResult.user;
+    authStatus.OK = true;
+
+  } catch (error: any) {
+    authStatus.error = error.message;
+  }
+  return authStatus;
+}
+
+
+export const logoutFirebase = async () => {
+  return await fireBaseAuth.signOut();
+}
