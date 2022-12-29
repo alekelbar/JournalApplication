@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Auth } from "../types/auth.type";
+import { Auth } from "./types/auth.type";
 
 const initialState: Auth = {
   status: "cheking", // 'autenticated', 'not-autenticated'
