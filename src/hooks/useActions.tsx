@@ -1,5 +1,8 @@
 import { createTheme, PaletteMode } from "@mui/material";
-import React, { useState } from "react";
+import { ModeAction } from '../common/types/index';
+import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks.redux';
+import { setMode } from '../redux/slices/theme';
+import { startCreateEmptyNote } from '../redux/thunks/journal/index';
 
 interface ThemeConfig {
   MODE: PaletteMode;
@@ -17,8 +20,12 @@ export const themeConfig: ThemeConfig = {
   FONT_GLOBAL: "Raleway, sans-serif",
 };
 
-export const useThemeMode = () => {
-  const [mode, setMode] = useState(true);
+export const useActions = () => {
+
+  //TODO:  buscar el modo en el estado...
+  const { mode } = useAppSelector(state => state.theme);
+  const dispatch = useAppDispatch();
+
   const theme = createTheme({
     palette: {
       mode: mode ? "dark" : "light",
@@ -52,9 +59,20 @@ export const useThemeMode = () => {
     },
   });
 
-  const handleTheme = (mode: PaletteMode) => {
-    setMode(mode === "dark" ? true : false);
+  const switchMode = () => {
+    dispatch(setMode())
+  }
+
+  const handleAction = (mode: ModeAction) => {
+    switch (mode.name) {
+      case 'theme':
+        switchMode();
+        break;
+      case 'add':
+        dispatch(startCreateEmptyNote());
+        break;
+    }
   };
 
-  return { theme, handleTheme };
+  return { theme, handleAction };
 };

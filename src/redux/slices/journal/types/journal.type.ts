@@ -2,8 +2,8 @@
 export interface journalState {
   isSaving: boolean;
   messageSaved: '';
-  notes: [];
-  active: Note;
+  notes: Note[];
+  active: Note | null;
 }
 
 export interface Note {

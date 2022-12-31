@@ -11,9 +11,10 @@ export const NothingSelectecView: React.FC = () => {
       alignItems="center"
       sx={{
         minHeight: `calc(100vh - 120px)`,
-        backgroundColor: "secondary.main",
+        backgroundColor: "background.main",
         borderRadius: "20px",
         maxWidth: "550px",
+        width: '90%'
       }}
     >
       <Grid item>

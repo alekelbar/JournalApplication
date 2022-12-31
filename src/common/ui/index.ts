@@ -1,3 +1,3 @@
 export * from './Navbar';
 export * from './SideBar';
-export * from './ThemeButton';
+export * from './FloatingButton';

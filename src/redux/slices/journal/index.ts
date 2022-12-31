@@ -1,27 +1,27 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { journalState } from "./types/journal.type";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { journalState, Note } from "./types/journal.type";
 
 const initialState: journalState = {
-  isSaving: true,
+  isSaving: false,
   messageSaved: "",
   notes: [],
-  active: {
-    id: "",
-    title: "",
-    body: "",
-    date: 121212,
-    imageUrls: [],
-  },
+  active: null,
 };
 
 export const journalSlice = createSlice({
   name: "journal",
   initialState,
   reducers: {
-    addNewEmptyNote: (state, action) => {},
-    setActiveNote: (state, action) => {},
+    addNewEmptyNote: (state, { payload }: PayloadAction<Note>) => {
+      return { ...state, notes: [payload, ...state.notes] };
+    },
+    setActiveNote: (state, { payload }: PayloadAction<Note>) => {
+      return { ...state, active: payload };
+    },
     setNotes: (state, action) => {},
-    setSaving: (state, action) => {},
+    setSaving: (state, { payload }: PayloadAction<boolean>) => {
+      return { ...state, isSaving: payload };
+    },
     updateNote: (state, action) => {},
     deleteNoteById: (state, action) => {},
   },
