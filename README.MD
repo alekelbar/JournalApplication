@@ -1,9 +1,12 @@
 
 # Hi, I'm Alexander! 👋
 
-UNA - Student of information systems engineering.
+<h3 align="center">Student of information systems engineering at <a href="https://www.una.ac.cr/">UNA</a>.</h3>
+
 ## 🚀 About Me
-I'm a principally react.js developer. I'm a passionate to programming and actually, I am a student at the National University of Costa Rica. Not only that, but I'm graduated like informatic applications programmer, from the same university. I'm studying the rest of bachelor, and I'm 3/4 years complete.
+I'm a React.js developer. A passionate programmer and student at the National University of Costa Rica. Actually, I'm graduated like informatic applications programmer, from the same university.
+
+I'm studying the rest of bachelor degree, 3 of 4 years were completed.
 
 # JournalApp
 
