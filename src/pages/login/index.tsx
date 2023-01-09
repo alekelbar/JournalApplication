@@ -26,7 +26,7 @@ const initialValues: UserCredentials = {
 
 export const LoginPage: React.FC = () => {
 
-  console.log('login page, rendering...')
+  console.log('login page, rendering...');
   // Status del proceso...
   const { status, errorMessage } = useAppSelector((state) => state.auth);
 
@@ -46,7 +46,7 @@ export const LoginPage: React.FC = () => {
 
       if (authResult) navigate('/', { replace: true });
 
-      console.log(authResult)
+      console.log(authResult);
 
       resetForm({ values: initialValues });
     },
@@ -107,6 +107,13 @@ export const LoginPage: React.FC = () => {
                 : "secondary"
             }
             helperText={formik.errors.email || ""}
+            FormHelperTextProps={{
+              sx: {
+                '&:hover': {
+                  color: 'white'
+                },
+              }
+            }}
             fullWidth
             variant="filled"
             label="email"
@@ -126,6 +133,16 @@ export const LoginPage: React.FC = () => {
                 : "secondary"
             }
             helperText={formik.errors.password || ""}
+            FormHelperTextProps={{
+              sx: {
+                '&:hover': {
+                  color: 'white'
+                },
+              }
+            }}
+            sx={{
+              maxWidth: '100%'
+            }}
             fullWidth
             variant="filled"
             label="password"

@@ -18,7 +18,7 @@ export const AuthLayout: React.FC<Props> = ({ title, children, onSubmit }) => {
       justifyContent={"center"}
       alignItems={"center"}
     >
-      <Grid item>
+      <Grid item xs={12} sm={6} md={4} >
         <Container>
           <Paper sx={{ p: 4 }}>
             <Box component={"form"} onSubmit={onSubmit}>

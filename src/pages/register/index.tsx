@@ -25,7 +25,7 @@ const initialValues: UserCredentials = {
 };
 
 export const RegisterPage: React.FC = () => {
-  console.log('register page, rendering...')
+  console.log('register page, rendering...');
   const dispatch = useAppDispatch();
 
   const { errorMessage, status } = useAppSelector((state) => state.auth);
@@ -118,6 +118,13 @@ export const RegisterPage: React.FC = () => {
             name={"fullName"}
             value={formik.values.fullName}
             onBlur={formik.handleBlur}
+            FormHelperTextProps={{
+              sx: {
+                '&:hover': {
+                  color: 'white'
+                },
+              }
+            }}
           />
         </Grid>
         <Grid item>
@@ -137,6 +144,13 @@ export const RegisterPage: React.FC = () => {
             name={"email"}
             value={formik.values.email}
             onBlur={formik.handleBlur}
+            FormHelperTextProps={{
+              sx: {
+                '&:hover': {
+                  color: 'white'
+                },
+              }
+            }}
           />
         </Grid>
         <Grid item>
@@ -157,6 +171,13 @@ export const RegisterPage: React.FC = () => {
             type={'password'}
             value={formik.values.password}
             onBlur={formik.handleBlur}
+            FormHelperTextProps={{
+              sx: {
+                '&:hover': {
+                  color: 'white'
+                },
+              }
+            }}
           />
         </Grid>
         <Grid item>
