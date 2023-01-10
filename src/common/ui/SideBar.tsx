@@ -79,7 +79,7 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
                 }}
               >
                 <Avatar />
-                <Typography color='black' variant="h6">{displayName}</Typography>
+                <Typography sx={{ mixBlendMode: 'screen' }} variant="h6">{displayName}</Typography>
 
               </Box>
             </Grid>
