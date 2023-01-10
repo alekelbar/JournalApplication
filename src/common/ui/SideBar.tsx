@@ -1,5 +1,6 @@
 import { Close, TurnedIn } from "@mui/icons-material";
-import { useAppSelector } from '../../redux/hooks/hooks.redux';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks/hooks.redux';
+import { Note } from '../../redux/slices/journal/types/journal.type';
 import {
   Grid,
   ListItemButton,
@@ -17,6 +18,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { setActiveNote } from "../../redux/slices/journal";
 
 interface Props {
   drawerSize: number;
@@ -27,10 +29,8 @@ interface Props {
 export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
 
   const { notes } = useAppSelector(state => state.journal);
-
-  console.log(notes);
-
   const { displayName } = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
 
   const handleCloseWithEsc = (e: React.KeyboardEvent) => {
     console.log(e);
@@ -39,6 +39,10 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
 
   const handleOutClick = (e: React.MouseEvent) => {
     if (e.pageX > 380) CloseDrawer();
+  };
+
+  const onActiveNote = (note: Note) => {
+    dispatch(setActiveNote(note));
   };
 
   return (
@@ -56,6 +60,7 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
             direction={"row"}
             justifyContent={"space-between"}
             alignItems={"center"}
+            spacing={8}
           >
             <Grid item>
               <IconButton onClick={() => CloseDrawer()}>
@@ -72,7 +77,7 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
                   mt: 2,
                 }}
               >
-                <Avatar sx={{ mt: 1 }} />
+                <Avatar />
                 <Typography mb={1} variant="body1">{displayName}</Typography>
 
               </Box>
@@ -83,7 +88,7 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
         <List sx={{ overflow: "auto" }}>
           {notes && notes.map((note) => (
             <ListItem key={note.date}>
-              <ListItemButton>
+              <ListItemButton onClick={() => { onActiveNote(note); }}>
                 <ListItemIcon>
                   <TurnedIn />
                 </ListItemIcon>
