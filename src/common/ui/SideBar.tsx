@@ -26,6 +26,10 @@ interface Props {
 
 export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
 
+  const { notes } = useAppSelector(state => state.journal);
+
+  console.log(notes);
+
   const { displayName } = useAppSelector(state => state.auth);
 
   const handleCloseWithEsc = (e: React.KeyboardEvent) => {
@@ -77,20 +81,20 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
         </Toolbar>
         <Divider sx={{ my: 2 }} />
         <List sx={{ overflow: "auto" }}>
-          {["enero", "febrero", "marzo", "abril", "junio", "Julio"].map((e) => (
-            <ListItem key={e}>
+          {notes && notes.map((note) => (
+            <ListItem key={note.date}>
               <ListItemButton>
                 <ListItemIcon>
                   <TurnedIn />
                 </ListItemIcon>
                 <Grid container direction={"column"}>
                   <ListItemText
-                    primary={e[0].toUpperCase() + e.slice(1, e.length)}
+                    primary={note.title}
                   />
                   <ListItemText
                     sx={{ maxWidth: 250, overflow: "hidden" }}
                     secondary={
-                      "Do sunt ullamco duis sit et elit cillum in deserunt consequat dolore deserunt veniam sunt."
+                      note.body
                     }
                   />
                 </Grid>
