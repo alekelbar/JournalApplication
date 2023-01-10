@@ -2,8 +2,17 @@ import React from "react";
 import { Button, Grid, Typography, TextField } from "@mui/material";
 import { Container } from "@mui/system";
 import { ImageGallery } from "../ImageGallery";
+import { useAppSelector } from '../../redux/hooks/hooks.redux';
 
 export const NoteView = () => {
+
+  // it's not posible show NoteView without an active note
+  const { active } = useAppSelector(state => state.journal);
+  if (!active) throw new Error('does not exist an active note.');
+
+  //TODO: make a use form hook, remenber
+
+  const { body, date, title } = active;
 
   return (
     <Container>
@@ -20,7 +29,7 @@ export const NoteView = () => {
           {/* Formulario... */}
           <Grid container justifyContent={"space-between"} alignItems="center">
             <Typography color={"primary.main"}>
-              {new Date("December 17, 1995 03:24:00").toDateString()}
+              {new Date(date).toDateString()}
             </Typography>
             <Button variant="contained">Save Note</Button>
           </Grid>
@@ -28,6 +37,7 @@ export const NoteView = () => {
             <Grid item mb={".5em"}>
               <TextField
                 label="Titulo"
+                value={title}
                 fullWidth
                 color="secondary"
                 placeholder="¿Cual es el título?"
@@ -36,6 +46,7 @@ export const NoteView = () => {
             <Grid item mt={".5em"}>
               <TextField
                 label="Contenido"
+                value={body}
                 fullWidth
                 color="secondary"
                 multiline
