@@ -55,16 +55,17 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
         onKeyDown={handleCloseWithEsc}
         onClick={handleOutClick}
       >
-        <Container>
+        <Container sx={{ bgcolor: 'gray' }}>
           <Grid
             container
             direction={"column"}
             justifyContent={"space-between"}
             alignItems={"center"}
             my={2}
+            spacing={2}
           >
             <Grid item>
-              <IconButton sx={{ bgcolor: 'error.main' }} onClick={() => CloseDrawer()}>
+              <IconButton sx={{ bgcolor: 'secondary.main' }} onClick={() => CloseDrawer()}>
                 <Close fontSize="small" />
               </IconButton>
             </Grid>
@@ -75,17 +76,16 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  mt: 2,
                 }}
               >
                 <Avatar />
-                <Typography mb={1} variant="h6">{displayName}</Typography>
+                <Typography color='black' variant="h6">{displayName}</Typography>
 
               </Box>
             </Grid>
           </Grid>
         </Container>
-        <Divider sx={{ my: 2 }} />
+        <Divider />
         <List sx={{ overflow: "auto" }}>
           {notes.length
             ?

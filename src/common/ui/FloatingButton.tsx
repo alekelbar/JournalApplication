@@ -27,8 +27,7 @@ export const FloatingButton: React.FC<Props> = ({ actionHandler }) => {
   return (
     <SpeedDial
       ariaLabel="Theme selected"
-      aria-setsize={150}
-      sx={{ position: "fixed", bottom: { xs: 16, sm: '10vh' }, right: { xs: 16, sm: 'calc(50% - 56px/2)' } }}
+      sx={{ position: "fixed", bottom: { xs: '5%', sm: '10%' }, right: { xs: '5%', sm: '10%' } }}
       icon={< SpeedDialIcon />}
     >
       {

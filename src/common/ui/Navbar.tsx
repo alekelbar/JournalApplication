@@ -19,31 +19,31 @@ export const Navbar: React.FC<Props> = ({ setDrawerOpen }) => {
     setDrawerOpen(true);
   };
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
-  const handleLogOut = async() => {
+  const handleLogOut = async () => {
     await dispatch(startLogoutFirebase());
-  }
+  };
 
   return (
     <Grid container>
       <AppBar position="sticky">
         <Toolbar>
-          <Grid container justifyContent={"space-around"} alignItems="end">
+          <Grid container direction={'row'} justifyContent={"space-between"} alignItems="center">
             <Grid item>
-              <IconButton onClick={() => handleDrawer()}>
-                <MenuOutlined />
-              </IconButton>
-            </Grid>
-            <Grid item>
-              <Typography variant="h6" textAlign={"center"}>
-                Journal-App
-              </Typography>
+              <Grid container direction={'row'} alignItems='center'>
+                <IconButton onClick={() => handleDrawer()}>
+                  <MenuOutlined color="secondary" />
+                </IconButton>
+                <Typography color={'whitesmoke'} variant="h5" textAlign={"center"}>
+                  Journal-App
+                </Typography>
+              </Grid>
             </Grid>
             <Grid item>
               <Grid item>
                 <IconButton onClick={handleLogOut}>
-                  <LogoutRounded />
+                  <LogoutRounded color="secondary" />
                 </IconButton>
               </Grid>
             </Grid>
