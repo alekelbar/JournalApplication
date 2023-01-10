@@ -3,9 +3,12 @@ import { firebaseFirestore } from "../../../firebase/index.firebase";
 import {
   addNewEmptyNote,
   setActiveNote,
+  setNotes,
   setSaving,
 } from "../../slices/journal";
-import { Note } from "../../slices/journal/types/journal.type";
+import { Note, journalState } from "../../slices/journal/types/journal.type";
+import { loadNotes } from "../../../helpers/loadNotes";
+import { AppDispatch, RootState } from "../../store/store.redux";
 
 export const startCreateEmptyNote = () => {
   return async (dispatch: any, getState: any) => {
@@ -31,5 +34,15 @@ export const startCreateEmptyNote = () => {
 
     dispatch(addNewEmptyNote(newNote));
     dispatch(setActiveNote(newNote));
+  };
+};
+
+export const startSetNotes = () => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    const { uid } = getState().auth;
+    if (!uid) throw new Error("The uid was not provided");
+    const notes = await loadNotes(uid);
+    // make the notes dispatch
+    dispatch(setNotes(notes));
   };
 };
