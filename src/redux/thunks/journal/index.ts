@@ -23,8 +23,8 @@ export const startCreateEmptyNote = () => {
 
     const newDoc = doc(collection(firebaseFirestore, `${uid}/journal/notes`));
     const newNote: Note = {
-      title: "",
-      body: "",
+      title: "Example title of",
+      body: "Fugiat quis consectetur excepteur tempor nulla labore consectetur elit deserunt. Incididunt reprehenderit.",
       date: new Date().getTime(),
       id: uid,
       imageUrls: [],
