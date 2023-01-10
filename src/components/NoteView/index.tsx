@@ -4,6 +4,7 @@ import { Container } from "@mui/system";
 import { ImageGallery } from "../ImageGallery";
 
 export const NoteView = () => {
+
   return (
     <Container>
       <Grid

@@ -1,5 +1,4 @@
 import { Add, DarkMode, Note, NoteAdd } from "@mui/icons-material";
-import LightModeIcon from "@mui/icons-material/LightMode";
 import { ModeAction } from '../types/index';
 import { useAppSelector } from '../../redux/hooks/hooks.redux';
 import {
@@ -13,7 +12,7 @@ const actions: ModeAction[] = [
 ];
 
 interface Props {
-  actionHandler: (theme: ModeAction) => void
+  actionHandler: (theme: ModeAction) => void;
 }
 
 export const FloatingButton: React.FC<Props> = ({ actionHandler }) => {
@@ -22,7 +21,7 @@ export const FloatingButton: React.FC<Props> = ({ actionHandler }) => {
   const handleActions = (mode: ModeAction) => {
     if (mode.name === 'add' && (isSaving || location.pathname.includes('auth'))) return;
     actionHandler(mode);
-  }
+  };
 
 
   return (
@@ -35,6 +34,9 @@ export const FloatingButton: React.FC<Props> = ({ actionHandler }) => {
       {
         actions.map((mode: ModeAction) => (
           <SpeedDialAction
+            sx={{
+              display: isSaving && mode.name === 'add' ? 'none' : ''
+            }}
             key={mode.name}
             icon={mode.icon}
             tooltipTitle={mode.name}
