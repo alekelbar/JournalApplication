@@ -6,7 +6,6 @@ import { Grid } from "@mui/material";
 import { useAppSelector } from '../../redux/hooks/hooks.redux';
 
 export const HomePage: React.FC = () => {
-  console.log("Home page rendering...");
   const { active } = useAppSelector(state => state.journal);
 
   return (

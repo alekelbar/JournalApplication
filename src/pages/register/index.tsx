@@ -25,7 +25,6 @@ const initialValues: UserCredentials = {
 };
 
 export const RegisterPage: React.FC = () => {
-  console.log('register page, rendering...');
   const dispatch = useAppDispatch();
 
   const { errorMessage, status } = useAppSelector((state) => state.auth);

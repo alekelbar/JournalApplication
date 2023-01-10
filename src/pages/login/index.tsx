@@ -26,7 +26,6 @@ const initialValues: UserCredentials = {
 
 export const LoginPage: React.FC = () => {
 
-  console.log('login page, rendering...');
   // Status del proceso...
   const { status, errorMessage } = useAppSelector((state) => state.auth);
 
@@ -45,8 +44,6 @@ export const LoginPage: React.FC = () => {
       const authResult = await dispatch(startLoginWithEmailAndPassword(email, password));
 
       if (authResult) navigate('/', { replace: true });
-
-      console.log(authResult);
 
       resetForm({ values: initialValues });
     },
@@ -79,8 +76,6 @@ export const LoginPage: React.FC = () => {
   const onCloseError = () => {
     setOpenError(false);
   };
-
-  console.log(errorMessage && 'si existe');
 
   return (
     <AuthLayout title="Login" onSubmit={formik.handleSubmit}>

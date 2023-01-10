@@ -7,7 +7,7 @@ import {
   Box,
   ListItemText,
   Divider,
-  ListItemIcon,
+  ListItemIcon
 } from "@mui/material";
 import {
   Avatar,
@@ -15,10 +15,12 @@ import {
   IconButton,
   List,
   ListItem,
-  Toolbar,
   Typography,
 } from "@mui/material";
 import { setActiveNote } from "../../redux/slices/journal";
+import { Container } from '@mui/system';
+import image from './../../assets/empty.jpg';
+import { Image } from "../../components";
 
 interface Props {
   drawerSize: number;
@@ -33,7 +35,6 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
   const dispatch = useAppDispatch();
 
   const handleCloseWithEsc = (e: React.KeyboardEvent) => {
-    console.log(e);
     if (e.code === "Escape") CloseDrawer();
   };
 
@@ -54,17 +55,17 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
         onKeyDown={handleCloseWithEsc}
         onClick={handleOutClick}
       >
-        <Toolbar>
+        <Container>
           <Grid
             container
-            direction={"row"}
+            direction={"column"}
             justifyContent={"space-between"}
             alignItems={"center"}
-            spacing={8}
+            my={2}
           >
             <Grid item>
-              <IconButton onClick={() => CloseDrawer()}>
-                <Close fontSize="large" />
+              <IconButton sx={{ bgcolor: 'error.main' }} onClick={() => CloseDrawer()}>
+                <Close fontSize="small" />
               </IconButton>
             </Grid>
             <Grid item>
@@ -78,34 +79,45 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
                 }}
               >
                 <Avatar />
-                <Typography mb={1} variant="body1">{displayName}</Typography>
+                <Typography mb={1} variant="h6">{displayName}</Typography>
 
               </Box>
             </Grid>
           </Grid>
-        </Toolbar>
+        </Container>
         <Divider sx={{ my: 2 }} />
         <List sx={{ overflow: "auto" }}>
-          {notes && notes.map((note) => (
-            <ListItem key={note.date}>
-              <ListItemButton onClick={() => { onActiveNote(note); }}>
-                <ListItemIcon>
-                  <TurnedIn />
-                </ListItemIcon>
-                <Grid container direction={"column"}>
-                  <ListItemText
-                    primary={note.title}
-                  />
-                  <ListItemText
-                    sx={{ maxWidth: 250, overflow: "hidden" }}
-                    secondary={
-                      note.body
-                    }
-                  />
-                </Grid>
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {notes.length
+            ?
+            notes.map((note) => (
+              <ListItem key={note.date}>
+                <ListItemButton onClick={() => { onActiveNote(note); }}>
+                  <ListItemIcon>
+                    <TurnedIn />
+                  </ListItemIcon>
+                  <Grid container direction={"column"}>
+                    <ListItemText
+                      primary={note.title}
+                    />
+                    <ListItemText
+                      sx={{ maxWidth: 250, overflow: "hidden" }}
+                      secondary={
+                        note.body
+                      }
+                    />
+                  </Grid>
+                </ListItemButton>
+              </ListItem>
+            ))
+            :
+            <Grid container width={'100%'} direction="column" alignItems={'center'}>
+              <Typography variant="h4">Empty Room</Typography>
+              <Image
+                containerStyles={{ display: 'flex', justifyContent: 'center' }}
+                image={image}
+              />
+            </Grid>
+          }
         </List>
       </Drawer>
     </Box>
