@@ -13,7 +13,6 @@ const initialState: Auth = {
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  // TODO: Define dataypes of: ActionsPayload
   reducers: {
     login: (_, { payload }: PayloadAction<Auth>) => {
       return { ...payload };

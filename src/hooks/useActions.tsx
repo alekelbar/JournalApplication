@@ -22,7 +22,6 @@ export const themeConfig: ThemeConfig = {
 
 export const useActions = () => {
 
-  //TODO:  buscar el modo en el estado...
   const { mode } = useAppSelector(state => state.theme);
   const dispatch = useAppDispatch();
 
