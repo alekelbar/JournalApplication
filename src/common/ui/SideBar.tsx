@@ -91,7 +91,7 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
             ?
             notes.map((note) => (
               <ListItem key={note.date}>
-                <ListItemButton onClick={() => { onActiveNote(note); }}>
+                <ListItemButton onClick={() => { onActiveNote(note); CloseDrawer(); }}>
                   <ListItemIcon>
                     <TurnedIn />
                   </ListItemIcon>
