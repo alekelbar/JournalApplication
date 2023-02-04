@@ -51,11 +51,11 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
       <Drawer
         variant="temporary"
         open={open}
-        sx={{ display: { sm: "block" }, width: drawerSize }}
+        sx={{ display: { sm: "block" }, }}
         onKeyDown={handleCloseWithEsc}
         onClick={handleOutClick}
       >
-        <Container sx={{ bgcolor: 'gray' }}>
+        <Container sx={{ bgcolor: 'gray', width: '100%' }}>
           <Grid
             container
             direction={"column"}
@@ -90,7 +90,7 @@ export const SideBar: React.FC<Props> = ({ drawerSize, open, CloseDrawer }) => {
           {notes.length
             ?
             notes.map((note) => (
-              <ListItem key={note.date}>
+              <ListItem key={note.body}>
                 <ListItemButton onClick={() => { onActiveNote(note); CloseDrawer(); }}>
                   <ListItemIcon>
                     <TurnedIn />

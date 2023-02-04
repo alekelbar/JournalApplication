@@ -7,7 +7,7 @@ export interface journalState {
 }
 
 export interface Note {
-  id: string;
+  id?: string;
   title: string;
   body: string;
   date: number;

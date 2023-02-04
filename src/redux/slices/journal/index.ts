@@ -32,8 +32,12 @@ export const journalSlice = createSlice({
       { payload }: PayloadAction<{ title: string; body: string }>
     ) => {
       if (!state.active) throw new Error("does not exist a selected note");
-      const act = { ...state.active };
-      return { ...state, active: { ...act, ...payload } };
+
+      const act = { ...state.active, ...payload };
+
+      const notes = [...state.notes.filter((e) => e.id !== act.id), act];
+
+      return { ...state, notes, active: act };
     },
     deleteNoteById: (state, action) => {},
   },

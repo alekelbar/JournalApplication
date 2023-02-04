@@ -1,7 +1,12 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 export const useForm = (initialState: any) => {
   const [inputForm, setInputForm] = useState(initialState);
+
+  useEffect(() => {
+    setInputForm(initialState);
+  }, [initialState]);
+
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 

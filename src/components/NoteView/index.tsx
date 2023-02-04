@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Grid, Typography, TextField, Box } from "@mui/material";
 import { Container } from "@mui/system";
 import { ImageGallery } from "../ImageGallery";

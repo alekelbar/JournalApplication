@@ -1,4 +1,4 @@
-import { Add, DarkMode, Note, NoteAdd } from "@mui/icons-material";
+import { DarkMode, NoteAdd } from "@mui/icons-material";
 import { ModeAction } from '../types/index';
 import { useAppSelector } from '../../redux/hooks/hooks.redux';
 import {

@@ -4,10 +4,11 @@ import { Note } from "../redux/slices/journal/types/journal.type";
 export const loadNotes = async (uid: string) => {
   if (!uid) throw new Error("uid was not provided");
   
-  const newDocRef = collection(firebaseFirestore, `${uid}/journal/notes`);
+  const newDocRef = collection(firebaseFirestore, `${uid}/journal/notes/`);
   const { docs } = await getDocs(newDocRef);
 
   return docs.map((doc): Note => {
-    return { ...doc.data() } as Note;
+    return { ...doc.data(), id: doc.id } as Note;
   });
+  
 };
