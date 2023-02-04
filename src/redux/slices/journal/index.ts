@@ -27,7 +27,14 @@ export const journalSlice = createSlice({
     setSaving: (state, { payload }: PayloadAction<boolean>) => {
       return { ...state, isSaving: payload };
     },
-    updateNote: (state, action) => {},
+    updateNote: (
+      state,
+      { payload }: PayloadAction<{ title: string; body: string }>
+    ) => {
+      if (!state.active) throw new Error("does not exist a selected note");
+      const act = { ...state.active };
+      return { ...state, active: { ...act, ...payload } };
+    },
     deleteNoteById: (state, action) => {},
   },
 });

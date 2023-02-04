@@ -46,3 +46,23 @@ export const startSetNotes = () => {
     dispatch(setNotes(notes));
   };
 };
+
+export const startSaveNote = () => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    dispatch(setSaving(true));
+
+    const { uid } = getState().auth;
+    const { active } = getState().journal;
+
+    const newNote = { ...active };
+    delete newNote.id;
+
+    const docRef = doc(
+      firebaseFirestore,
+      `${uid}/journal/notes/${active!!.id}`
+    );
+    await setDoc(docRef, newNote, { merge: true });
+
+    dispatch(setSaving(false));
+  };
+};

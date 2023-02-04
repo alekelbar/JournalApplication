@@ -1,23 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Grid, Typography, TextField, Box } from "@mui/material";
 import { Container } from "@mui/system";
 import { ImageGallery } from "../ImageGallery";
-import { useAppSelector } from '../../redux/hooks/hooks.redux';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks/hooks.redux';
 import { useForm } from '../../hooks/useForm';
+import { updateNote } from "../../redux/slices/journal";
+import { startSaveNote } from "../../redux/thunks/journal";
 
 export const NoteView = () => {
 
   // it's not posible show NoteView without an active note
   const { active } = useAppSelector(state => state.journal);
+  const dispatch = useAppDispatch();
+
   if (!active) throw new Error('does not exist an active note.');
   const { body, date, title } = active;
 
   // TODO: make a use form hook, remenber
   const { inputForm, onChange } = useForm({
-    title: title,
-    body: body
+    title,
+    body
   });
 
+  useEffect(() => {
+    dispatch(updateNote(inputForm));
+  }, [inputForm]);
+
+  const onSave = () => {
+    dispatch(startSaveNote());
+  };
 
   return (
     <Container>
@@ -37,7 +48,7 @@ export const NoteView = () => {
               <Typography color={"primary.main"}>
                 {new Date(date).toDateString()}
               </Typography>
-              <Button type="submit" variant="contained">Save Note</Button>
+              <Button type="submit" onClick={onSave} variant="contained">Save Note</Button>
             </Grid>
             <Grid container direction={"column"} mt={2}>
               <Grid item mb={".5em"}>
